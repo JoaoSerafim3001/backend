@@ -59,7 +59,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
-    cookie: { maxAge: 1000 * 60 * 60 },
+    cookie: { maxAge: 1000 * 60 * 60, sameSite: "none", secure: true, httpOnly: true },
     path: "/",
   })
 );
