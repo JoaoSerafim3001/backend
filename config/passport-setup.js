@@ -11,6 +11,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((_id, done) => {
   User.findById(_id).then((user) => {
+    req.session.currentUser = user;
     done(null, user);
   });
 });
