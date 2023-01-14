@@ -8,11 +8,10 @@ const router = Router();
 router.post(
   "/",
   asyncHandler(async (req, res) => {
-
-    const foundUser = await User.findByIdAndUpdate(
-      req.session.currentUser._id,
-      { $push: { productsInCart: req.body.addedProduct } }
-    );
+    console.log("POST", req.session.currentUser);
+    const foundUser = await User.findByIdAndUpdate(req.session.currentUser._id, {
+      $push: { productsInCart: req.body.product },
+    });
     res.send("Product added to cart");
   })
 );
@@ -20,6 +19,7 @@ router.post(
 router.get(
   "/",
   asyncHandler(async (req, res) => {
+    console.log("GET", req.session.currentUser);
 
     const foundUser = await User.findById(req.session.currentUser._id).populate(
       "productsInCart.product"
@@ -32,11 +32,10 @@ router.get(
 //REMOVE PRODUCT FROM CART
 router.post(
   "/:id",
-  asyncHandler(async (req, res) => {   
-    const foundUser = await User.findByIdAndUpdate(
-      req.session.currentUser._id,
-      { $pull: { productsInCart: { _id: req.params.id } } }
-    );
+  asyncHandler(async (req, res) => {
+    const foundUser = await User.findByIdAndUpdate(req.session.currentUser._id, {
+      $pull: { productsInCart: { _id: req.params.id } },
+    });
     res.send("Product added to cart");
   })
 );
