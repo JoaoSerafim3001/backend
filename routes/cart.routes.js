@@ -9,6 +9,7 @@ router.post(
   "/",
   asyncHandler(async (req, res) => {
     console.log("POST", req.session.currentUser);
+    console.log("POST", req.user);
     const foundUser = await User.findByIdAndUpdate(req.session.currentUser._id, {
       $push: { productsInCart: req.body.product },
     });
@@ -20,6 +21,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     console.log("GET", req.session.currentUser);
+    console.log("GET", req.user);
 
     const foundUser = await User.findById(req.session.currentUser._id).populate(
       "productsInCart.product"
